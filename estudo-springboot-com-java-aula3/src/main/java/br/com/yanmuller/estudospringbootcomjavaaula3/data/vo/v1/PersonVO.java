@@ -1,37 +1,30 @@
-package br.com.yanmuller.estudospringbootcomjavaaula3.model;
+package br.com.yanmuller.estudospringbootcomjavaaula3.data.vo.v1;
 
-import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "person")
-public class Person implements Serializable {
+
+public class PersonVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
-    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
     private String surname;
 
-    @Column(nullable = false, length = 100)
     private String address;
 
-    @Column(nullable = false, length = 50)
     private String gender;
 
     // Construtor padrão
-    public Person() {
+    public PersonVO() {
     }
 
     // Construtor com argumentos
-    public Person(Long id, String firstName, String surname, String address, String gender) {
+    public PersonVO(Long id, String firstName, String surname, String address, String gender) {
         this.id = id;
         this.firstName = firstName;
         this.surname = surname;
@@ -83,7 +76,7 @@ public class Person implements Serializable {
     // Métodos equals e hashCode
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Person person)) return false;
+        if (!(o instanceof PersonVO person)) return false;
         return getId() == person.getId() &&
                 Objects.equals(getFirstName(), person.getFirstName()) &&
                 Objects.equals(getSurname(), person.getSurname()) &&

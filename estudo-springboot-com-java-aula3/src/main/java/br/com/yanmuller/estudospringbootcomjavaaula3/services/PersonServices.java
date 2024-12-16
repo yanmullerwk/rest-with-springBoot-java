@@ -1,15 +1,18 @@
 package br.com.yanmuller.estudospringbootcomjavaaula3.services;
 
 import br.com.yanmuller.estudospringbootcomjavaaula3.Exceptions.ResourseNotFoundExceptions;
+import br.com.yanmuller.estudospringbootcomjavaaula3.data.vo.v1.PersonVO;
+
+import br.com.yanmuller.estudospringbootcomjavaaula3.mapper.DozerMapper;
 import br.com.yanmuller.estudospringbootcomjavaaula3.model.Person;
 import br.com.yanmuller.estudospringbootcomjavaaula3.repositories.PersonRepository;
-import jakarta.persistence.Entity;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+
 import java.util.logging.Logger;
 
 @Service
@@ -21,39 +24,43 @@ public class PersonServices{
     @Autowired
     PersonRepository personRepository;
 
-    public Person findById(Long id){
+    public PersonVO findById(Long id){
         logger.info("finding one person");
 
-        return personRepository.findById(id).orElseThrow(()-> new ResourseNotFoundExceptions("No person found with id: " + id));
+        var entity = personRepository.findById(id);
+
+        return DozerMapper.parseObject(entity, PersonVO.class);
     }
 
-    public List<Person> findAll(){
+    public List<PersonVO> findAll(){
         logger.info("finding all persons");
 
-        return personRepository.findAll();
+        return DozerMapper.parseListObjects(personRepository.findAll(), PersonVO.class) ;
     }
 
-    public Person create(Person person){
+    public PersonVO create(PersonVO person){
         logger.info("creating person");
-        return personRepository.save(person);
+        var entity = DozerMapper.parseObject(person, Person.class);
+        var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        return vo;
     }
 
-    public Person upDate(Person person){
+    public PersonVO update(PersonVO person){
         logger.info("updating person");
-        Person entity = personRepository.findById(person.getId()).orElseThrow(() -> new ResourseNotFoundExceptions("No person found with id: " + person.getId()));
+        var entity = personRepository.findById(person.getId()).orElseThrow(() -> new ResourseNotFoundExceptions("No person found with id: " + person.getId()));
         entity.setFirstName(person.getFirstName());
         entity.setSurname(person.getSurname());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
-        return personRepository.save(person);
+        var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        return vo;
     }
+
 
     public void delete(Long id){
         logger.info("deleting person");
-        Person entity = personRepository.findById(id).orElseThrow(() -> new ResourseNotFoundExceptions("No person found with id: " + id));
+        var entity = personRepository.findById(id).orElseThrow(() -> new ResourseNotFoundExceptions("No person found with id: " + id));
         personRepository.delete(entity);
     }
-
-
 
 }
