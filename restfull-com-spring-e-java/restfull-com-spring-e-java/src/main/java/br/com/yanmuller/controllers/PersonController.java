@@ -3,7 +3,6 @@ package br.com.yanmuller.controllers;
 import br.com.yanmuller.models.Person;
 import br.com.yanmuller.services.PersonServices;
 import br.com.yanmuller.vo.v1.PersonVOV1;
-import br.com.yanmuller.vo.v2.PersonVOV2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
