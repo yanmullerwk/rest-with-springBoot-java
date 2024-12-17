@@ -2,11 +2,11 @@ package br.com.yanmuller.services;
 
 import br.com.yanmuller.exceptions.ResourceNotFoundException;
 import br.com.yanmuller.mapper.DozerMapper;
-import br.com.yanmuller.mapper.custom.PersonMapper;
+
 import br.com.yanmuller.models.Person;
 import br.com.yanmuller.repositories.PersonRepository;
 import br.com.yanmuller.vo.v1.PersonVOV1;
-import br.com.yanmuller.vo.v2.PersonVOV2;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,7 @@ public class PersonServices {
 
     @Autowired
     PersonRepository personRepository;
-    @Autowired
-    private PersonMapper personMapper;
+
 
     public PersonVOV1 findById(Long id){
         logger.info("Finding one person");
@@ -46,12 +45,7 @@ public class PersonServices {
         var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVOV1.class);
         return vo;
     }
-    public PersonVOV2 createV2(PersonVOV2 person){
-        logger.info("creating person");
-        var entity = personMapper.convertVOToEntity(person);
-        var vo = personMapper.convertEntityToVO(personRepository.save(entity));
-        return vo;
-    }
+
 
     public PersonVOV1 update(PersonVOV1 person){
         logger.info("updating person");

@@ -31,10 +31,6 @@ public class PersonController {
     public ResponseEntity<PersonVOV1> create(@RequestBody PersonVOV1 person) {
         return ResponseEntity.ok(personServices.create(person));
     }
-    @PostMapping(value = "/v2")
-    public ResponseEntity<PersonVOV2> createV2(@RequestBody PersonVOV2 person) {
-        return ResponseEntity.ok(personServices.createV2(person));
-    }
 
     @PutMapping
     public ResponseEntity<PersonVOV1> update(@RequestBody PersonVOV1 person) {
