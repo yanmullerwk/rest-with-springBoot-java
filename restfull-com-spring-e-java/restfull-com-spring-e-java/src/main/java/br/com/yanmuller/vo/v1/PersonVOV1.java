@@ -1,7 +1,10 @@
 package br.com.yanmuller.vo.v1;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 
+@JsonPropertyOrder({"id", "lastName", "firstName", "address", "gender"})
 public class PersonVOV1 implements Serializable {
  private static final long serialVersionUID = 1L;
 
